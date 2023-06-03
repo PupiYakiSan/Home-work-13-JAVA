@@ -13,14 +13,6 @@ public class ShopRepository {
         return tmp;
     }
 
-    public void add(Product product) {
-        products = addToArray(products, product);
-    }
-
-    public Product[] findAll() {
-        return products;
-    }
-
     public Product findById(int id) {
 
         Product[] tmp = new Product[products.length];
@@ -30,6 +22,23 @@ public class ShopRepository {
             }
         }
         return null;
+    }
+
+    public void add(Product product) {
+
+        int id = product.getId();
+        if (findById(id) == null) {
+            products = addToArray(products, product);
+        } else {
+            throw new AlreadyExistsException(
+                    "Element with id: " + id + " already exists"
+            );
+        }
+    }
+
+
+    public Product[] findAll() {
+        return products;
     }
 
     public void removeById(int id) {
